@@ -1,32 +1,37 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import React from "react";
+import { View, Text, StyleSheet } from "react-native";
 import { useUser } from "@/context/UserContext";
 
 export default function ProfileScreen() {
-  const { name } = useUser();
-
-  const [count, setCount] = useState<number>(0);
-
-  const incrementar = () => {
-    setCount(count + 1);
-  };
+  const { user, isLoading } = useUser();
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Perfil</Text>
-
-      <Text>Nombre leído desde Context:</Text>
-
-      <Text style={styles.name}>
-        {name || "No hay nombre disponible"}
+      <Text style={styles.subtitle}>
+        Datos recuperados desde el objeto global persistido.
       </Text>
 
-      {/* contador */}
-      <View style={{ marginTop: 30 }}>
-        <Text style={styles.counterLabel}>Contador:</Text>
-        <Text style={styles.counter}>{count}</Text>
+      <View style={styles.card}>
+        <Text style={styles.label}>Nombre</Text>
+        <Text style={styles.value}>
+          {isLoading ? "Cargando..." : user.name || "No registrado"}
+        </Text>
 
-        <Button title="Sumar +1" onPress={incrementar} />
+        <Text style={styles.label}>Correo</Text>
+        <Text style={styles.value}>
+          {isLoading ? "Cargando..." : user.email || "No registrado"}
+        </Text>
+
+        <Text style={styles.label}>Carrera</Text>
+        <Text style={styles.value}>
+          {isLoading ? "Cargando..." : user.career || "No registrada"}
+        </Text>
+
+        <Text style={styles.label}>Semestre</Text>
+        <Text style={styles.value}>
+          {isLoading ? "Cargando..." : user.semester || "No registrado"}
+        </Text>
       </View>
     </View>
   );
@@ -37,26 +42,34 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     justifyContent: "center",
+    backgroundColor: "#f5f7fb",
   },
   title: {
     fontSize: 22,
     fontWeight: "bold",
+    marginBottom: 8,
+  },
+  subtitle: {
+    fontSize: 14,
+    color: "#4b5563",
     marginBottom: 20,
   },
-  name: {
-    fontSize: 18,
-    fontWeight: "bold",
-    marginTop: 10,
-    color: "blue",
+  card: {
+    backgroundColor: "#ffffff",
+    borderRadius: 16,
+    padding: 20,
+    borderWidth: 1,
+    borderColor: "#dbeafe",
   },
-  counterLabel: {
+  label: {
     fontSize: 16,
-    marginBottom: 5,
+    fontWeight: "600",
+    color: "#1d4ed8",
+    marginTop: 10,
+    marginBottom: 6,
   },
-  counter: {
-    fontSize: 24,
-    fontWeight: "bold",
-    marginBottom: 10,
-    color: "green",
+  value: {
+    fontSize: 17,
+    color: "#111827",
   },
 });
