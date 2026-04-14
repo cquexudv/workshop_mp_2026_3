@@ -3,8 +3,14 @@ import { Picker } from "@react-native-picker/picker";
 import React, { useEffect, useState } from "react";
 import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
 
-const careers = ["Ingenieria en sistemas", "Ingenieria Industrial"];
-const semesters = ["Semestre 1", "Semestre 2", "Interciclo"];
+const careers = [{
+  label: "Ingenieria en sistemas",
+  id: "1"
+}, {
+  label: "Ingenieria industrial",
+  id: "2"
+}];
+const semesters = ["Semestre 1", "Semestre 2", "Semestre 3", "Semestre 4", "Semestre 5", "Semestre 6", "Semestre 7", "Semestre 8", "Semestre 9", "Semestre 10"];
 
 export default function HomeScreen() {
   const { user, isLoading, saveUser, clearUser } = useUser();
@@ -81,7 +87,7 @@ export default function HomeScreen() {
         >
           <Picker.Item label="Selecciona una carrera" value="" />
           {careers.map((career) => (
-            <Picker.Item key={career} label={career} value={career} />
+            <Picker.Item key={career.id} label={career.label} value={career.id} />
           ))}
         </Picker>
       </View>
