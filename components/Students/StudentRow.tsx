@@ -1,6 +1,9 @@
 
 import { StyleSheet, Text, View } from "react-native";
 export default function StudentRow({ student }: { student: { id: string, name: string, career: string, semester: string, email: string, photo: string } }) {
+
+
+
     return <View key={student.id} style={styles.summaryCard}>
         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 12 }}>
             <View style={{ width: 48, height: 48, borderRadius: 24, backgroundColor: "#e2e8f0", marginRight: 12, overflow: "hidden" }}>

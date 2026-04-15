@@ -1,7 +1,9 @@
 import StudentRow from "@/components/Students/StudentRow";
 import { router } from "expo-router";
 import { FlatList, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+
 export default function StudentsLayout() {
+
 
     const students = [
         { id: "1", name: "Juan Perez", career: "Ingenieria en sistemas", semester: "Semestre 5", email: "Juanperez@gmail.com", photo: "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png" },
