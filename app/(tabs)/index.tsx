@@ -2,6 +2,7 @@ import { useUser } from "@/context/UserContext";
 import { Picker } from "@react-native-picker/picker";
 import React, { useEffect, useState } from "react";
 import { Alert, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 const careers = [{
   label: "Ingenieria en sistemas",
@@ -19,6 +20,7 @@ export default function HomeScreen() {
     email: "",
     career: "",
     semester: "",
+    photo: "",
   });
 
   useEffect(() => {
@@ -51,80 +53,93 @@ export default function HomeScreen() {
       email: "",
       career: "",
       semester: "",
+      photo: "",
     });
   };
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Text style={styles.title}>Pantalla principal</Text>
-      <Text style={styles.subtitle}>
-        Estado local en el formulario, estado global con Context y persistencia con AsyncStorage.
-      </Text>
+    <SafeAreaView style={styles.safeArea} edges={["top"]}>
+      <ScrollView
+        style={styles.scrollView}
+        contentContainerStyle={styles.container}
+        contentInsetAdjustmentBehavior="automatic">
+        <Text style={styles.title}>Pantalla principal</Text>
+        <Text style={styles.subtitle}>
+          Estado local en el formulario, estado global con Context y persistencia con AsyncStorage.
+        </Text>
 
-      <Text style={styles.label}>Nombre</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Ingresa tu nombre"
-        value={form.name}
-        onChangeText={(masked) => handleChange("name", masked)}
-      />
+        <Text style={styles.label}>Nombre</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Ingresa tu nombre"
+          value={form.name}
+          onChangeText={(masked) => handleChange("name", masked)}
+        />
 
-      <Text style={styles.label}>Correo</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="correo@universidad.com"
-        value={form.email}
-        keyboardType="email-address"
-        autoCapitalize="none"
-        onChangeText={(masked) => handleChange("email", masked.toLowerCase())}
-      />
+        <Text style={styles.label}>Correo</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="correo@universidad.com"
+          value={form.email}
+          keyboardType="email-address"
+          autoCapitalize="none"
+          onChangeText={(masked) => handleChange("email", masked.toLowerCase())}
+        />
 
-      <Text style={styles.label}>Carrera</Text>
-      <View style={styles.selectContainer}>
-        <Picker
-          selectedValue={form.career}
-          onValueChange={(value) => handleChange("career", value)}
-        >
-          <Picker.Item label="Selecciona una carrera" value="" />
-          {careers.map((career) => (
-            <Picker.Item key={career.id} label={career.label} value={career.id} />
-          ))}
-        </Picker>
-      </View>
+        <Text style={styles.label}>Carrera</Text>
+        <View style={styles.selectContainer}>
+          <Picker
+            selectedValue={form.career}
+            onValueChange={(value) => handleChange("career", value)}
+          >
+            <Picker.Item label="Selecciona una carrera" value="" />
+            {careers.map((career) => (
+              <Picker.Item key={career.id} label={career.label} value={career.id} />
+            ))}
+          </Picker>
+        </View>
 
-      <Text style={styles.label}>Semestre</Text>
-      <View style={styles.selectContainer}>
-        <Picker
-          selectedValue={form.semester}
-          onValueChange={(value) => handleChange("semester", value)}
-        >
-          <Picker.Item label="Selecciona un semestre" value="" />
-          {semesters.map((semester) => (
-            <Picker.Item key={semester} label={semester} value={semester} />
-          ))}
-        </Picker>
-      </View>
+        <Text style={styles.label}>Semestre</Text>
+        <View style={styles.selectContainer}>
+          <Picker
+            selectedValue={form.semester}
+            onValueChange={(value) => handleChange("semester", value)}
+          >
+            <Picker.Item label="Selecciona un semestre" value="" />
+            {semesters.map((semester) => (
+              <Picker.Item key={semester} label={semester} value={semester} />
+            ))}
+          </Picker>
+        </View>
 
-      <Pressable style={styles.primaryButton} onPress={handleSave}>
-        <Text style={styles.primaryButtonText}>Guardar perfil</Text>
-      </Pressable>
+        <Pressable style={styles.primaryButton} onPress={handleSave}>
+          <Text style={styles.primaryButtonText}>Guardar perfil</Text>
+        </Pressable>
 
-      <Pressable style={styles.secondaryButton} onPress={handleClear}>
-        <Text style={styles.secondaryButtonText}>Limpiar datos</Text>
-      </Pressable>
+        <Pressable style={styles.secondaryButton} onPress={handleClear}>
+          <Text style={styles.secondaryButtonText}>Limpiar datos</Text>
+        </Pressable>
 
-      <View style={styles.summaryCard}>
-        <Text style={styles.summaryTitle}>Objeto actual en Context</Text>
-        <Text style={styles.summaryText}>Nombre: {user.name || "Sin datos"}</Text>
-        <Text style={styles.summaryText}>Correo: {user.email || "Sin datos"}</Text>
-        <Text style={styles.summaryText}>Carrera: {user.career || "Sin datos"}</Text>
-        <Text style={styles.summaryText}>Semestre: {user.semester || "Sin datos"}</Text>
-      </View>
-    </ScrollView>
+        <View style={styles.summaryCard}>
+          <Text style={styles.summaryTitle}>Objeto actual en Context</Text>
+          <Text style={styles.summaryText}>Nombre: {user.name || "Sin datos"}</Text>
+          <Text style={styles.summaryText}>Correo: {user.email || "Sin datos"}</Text>
+          <Text style={styles.summaryText}>Carrera: {user.career || "Sin datos"}</Text>
+          <Text style={styles.summaryText}>Semestre: {user.semester || "Sin datos"}</Text>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: "#f5f7fb",
+  },
+  scrollView: {
+    flex: 1,
+  },
   container: {
     padding: 20,
     paddingBottom: 40,
@@ -134,6 +149,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 8,
+    color: "#111827",
   },
   subtitle: {
     fontSize: 14,

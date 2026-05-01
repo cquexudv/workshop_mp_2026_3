@@ -1,10 +1,10 @@
 
-import { useGlobalSearchParams, useLocalSearchParams } from 'expo-router';
-import { StyleSheet, View } from "react-native";
+import { useLocalSearchParams } from 'expo-router';
+import { ScrollView, StyleSheet, Text } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function StudentDetails() {
 
-    const glob = useGlobalSearchParams();
     const local = useLocalSearchParams();
 
     const students = [
@@ -14,21 +14,48 @@ export default function StudentDetails() {
     ];
     const student = students.find(s => s.id === local.id);
 
-    return <View style={styles.container}>
-        <h1>Detalles del estudiante</h1>
-        <p>Aquí se mostrarán los detalles del estudiante seleccionado.</p>
-        <label>ID del estudiante: {student?.id}</label>
-        <label>Nombre del estudiante: {student?.name}</label>
-        <label>Carrera del estudiante: {student?.career}</label>
-        <label>Semestre del estudiante: {student?.semester}</label>
-        <label>Email del estudiante: {student?.email}</label>
-    </View>
+    return <SafeAreaView style={styles.safeArea} edges={["top"]}>
+        <ScrollView
+            style={styles.scrollView}
+            contentContainerStyle={styles.container}
+            contentInsetAdjustmentBehavior="automatic">
+            <Text style={styles.title}>Detalles del estudiante</Text>
+            <Text style={styles.description}>Aqui se muestran los detalles del estudiante seleccionado.</Text>
+            <Text style={styles.detail}>ID del estudiante: {student?.id}</Text>
+            <Text style={styles.detail}>Nombre del estudiante: {student?.name}</Text>
+            <Text style={styles.detail}>Carrera del estudiante: {student?.career}</Text>
+            <Text style={styles.detail}>Semestre del estudiante: {student?.semester}</Text>
+            <Text style={styles.detail}>Email del estudiante: {student?.email}</Text>
+        </ScrollView>
+    </SafeAreaView>
 }
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1,
+        backgroundColor: "#f5f7fb",
+    },
+    scrollView: {
+        flex: 1,
+    },
     container: {
         padding: 20,
         paddingBottom: 40,
         backgroundColor: "#f5f7fb",
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: "700",
+        marginBottom: 8,
+        color: "#111827",
+    },
+    description: {
+        fontSize: 14,
+        color: "#4b5563",
+        marginBottom: 16,
+    },
+    detail: {
+        fontSize: 16,
+        color: "#111827",
+        marginBottom: 10,
     }
 });
-

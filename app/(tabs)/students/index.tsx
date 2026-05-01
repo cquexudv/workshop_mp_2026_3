@@ -1,6 +1,7 @@
 import StudentRow from "@/components/Students/StudentRow";
 import { router } from "expo-router";
-import { FlatList, ScrollView, StyleSheet, TouchableOpacity } from "react-native";
+import { FlatList, StyleSheet, Text, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function StudentsLayout() {
 
@@ -11,20 +12,40 @@ export default function StudentsLayout() {
         { id: "3", name: "Carlos Sanchez", career: "Ingenieria en sistemas", semester: "Semestre 8", email: "Carlossanchez@gmail.com", photo: "https://cdn.pixabay.com/photo/2020/07/01/12/58/icon-5359553_1280.png" },
     ];
 
-    return <ScrollView style={styles.container}>
-        <h1>Listado de estudiantes</h1>
-        <FlatList data={students} keyExtractor={(item) => item.id} renderItem={({ item }) => (
-            <TouchableOpacity onPress={() => router.push(`/students/${item.id}`)}>
-                <StudentRow student={item} />
-            </TouchableOpacity>
-        )} />
-    </ScrollView>
+    return <SafeAreaView style={styles.safeArea} edges={["top"]}>
+        <FlatList
+            style={styles.container}
+            contentContainerStyle={styles.contentContainer}
+            contentInsetAdjustmentBehavior="automatic"
+            data={students}
+            keyExtractor={(item) => item.id}
+            ListHeaderComponent={<Text style={styles.title}>Listado de estudiantes</Text>}
+            renderItem={({ item }) => (
+                <TouchableOpacity onPress={() => router.push(`/students/${item.id}`)}>
+                    <StudentRow student={item} />
+                </TouchableOpacity>
+            )}
+        />
+    </SafeAreaView>
 };
 
 const styles = StyleSheet.create({
+    safeArea: {
+        flex: 1,
+        backgroundColor: "#f5f7fb",
+    },
     container: {
+        flex: 1,
+        backgroundColor: "#f5f7fb",
+    },
+    contentContainer: {
         padding: 20,
         paddingBottom: 40,
-        backgroundColor: "#f5f7fb",
+    },
+    title: {
+        fontSize: 24,
+        fontWeight: "700",
+        marginBottom: 16,
+        color: "#111827",
     }
 });

@@ -1,5 +1,5 @@
 
-import { StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, Text, View } from "react-native";
 export default function StudentRow({ student }: { student: { id: string, name: string, career: string, semester: string, email: string, photo: string } }) {
 
 
@@ -7,7 +7,7 @@ export default function StudentRow({ student }: { student: { id: string, name: s
     return <View key={student.id} style={styles.summaryCard}>
         <View style={{ flexDirection: "row", alignItems: "center", marginBottom: 12 }}>
             <View style={{ width: 48, height: 48, borderRadius: 24, backgroundColor: "#e2e8f0", marginRight: 12, overflow: "hidden" }}>
-                <img src={student.photo} alt={student.name} style={{ width: "100%", height: "100%" }} />
+                <Image source={{ uri: student.photo }} style={{ width: "100%", height: "100%" }} resizeMode="cover" />
             </View>
             <View>
                 <Text>{student.name}</Text>

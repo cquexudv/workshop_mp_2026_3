@@ -12,6 +12,7 @@ export type UserProfile = {
   email: string;
   career: string;
   semester: string;
+  photo: string;
 };
 
 type UserContextType = {
@@ -28,6 +29,7 @@ const emptyUser: UserProfile = {
   email: "",
   career: "",
   semester: "",
+  photo: "",
 };
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -46,7 +48,7 @@ export const UserProvider = ({ children }: UserProviderProps) => {
         const savedUser = await AsyncStorage.getItem(STORAGE_KEY);
 
         if (savedUser) {
-          setUser(JSON.parse(savedUser) as UserProfile);
+          setUser({ ...emptyUser, ...(JSON.parse(savedUser) as Partial<UserProfile>) });
         }
       } catch (error) {
         console.log("Error al recuperar usuario:", error);
